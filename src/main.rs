@@ -2,7 +2,7 @@ use std::io::{Result, Error, ErrorKind};
 use std::sync::Arc;
 use std::sync::mpsc::{channel, Sender, Receiver};
 
-use zecwalletlitelib::{commands, startup_helpers,
+use zecwalletlitelib::{commands, error_helpers,
     lightclient::{self, LightClient, LightClientConfig},
 };
 
@@ -118,24 +118,7 @@ pub fn main() {
             error!("Error during startup: {}", e);
             match e.raw_os_error() {
                 Some(13) => {
-                    let user = std::env::var("USER").expect(
-                        "Unexpected error reading value of $USER!");
-                    let home = std::env::var("HOME").expect(
-                        "Unexpected error reading value of $HOME!");
-                    let current_executable = std::env::current_exe()
-                        .expect("Unexpected error reporting executable path!");
-                    eprintln!("USER: {}", user);
-                    eprintln!("HOME: {}", home);
-                    eprintln!("Executable: {}", current_executable.display());
-                    if home == "/" {
-                        eprintln!("User {} must have permission to write to '{}.zcash/' .",
-                                  user,
-                                  home);
-                    } else {
-                        eprintln!("User {} must have permission to write to '{}/.zcash/' .",
-                                  user,
-                                  home);
-                    }
+                    error_helpers::report_permission_error();
                 },
                 _ => eprintln!("Something else!")
             }

@@ -3,7 +3,7 @@ use std::sync::Arc;
 use std::sync::mpsc::{channel, Sender, Receiver};
 
 use crate::{commands,
-    lightclient::{self, LightClient, LightClientConfig},
+    lightclient::{LightClient, LightClientConfig},
 };
 
 use log::{info, error, LevelFilter};

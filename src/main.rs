@@ -10,9 +10,9 @@ pub fn main() {
     use clap::{Arg, App};
     let matches = App::new("Zecwallet CLI")
                     .version("1.0.0")
-                    .arg(Arg::with_name("seed")
+                    .arg(Arg::with_name("plantseed")
                         .short("s")
-                        .long("seed")
+                        .long("plantseed")
                         .value_name("seed_phrase")
                         .help("Create a new wallet with the given 24-word seed phrase. Will fail if wallet already exists")
                         .takes_value(true))

@@ -35,6 +35,5 @@ macro_rules! configure_clapapp {
                 .help("Params to execute command with. Run the 'help' command to get usage help.")
                 .required(false)
                 .multiple(true))
-            .get_matches()
     };
 }

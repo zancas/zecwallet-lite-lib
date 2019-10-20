@@ -3,15 +3,15 @@ use zecwalletlitelib::{configure_clapapp,
                        startup_helpers::{report_permission_error,
                                          startup,
                                          start_interactive,
-                                         attempt_recover_seed}
-                      };
+                                         attempt_recover_seed}};
 use log::error;
 
 pub fn main() {
     // Get command line arguments
     use clap::{App, Arg};
-    let clap_app = App::new("Zecwallet CLI");
-    let matches = configure_clapapp!(clap_app);
+    let fresh_app = App::new("Zecwallet CLI");
+    let configured_app = configure_clapapp!(fresh_app);
+    let matches = configured_app.get_matches();
     if matches.is_present("recover") {
         attempt_recover_seed();
         return;

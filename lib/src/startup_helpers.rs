@@ -69,6 +69,7 @@ pub fn get_log_config(config: &LightClientConfig) -> Result<Config> {
         .map_err(|e|Error::new(ErrorKind::Other, format!("{}", e)))
 }
 
+
 pub fn startup(server: http::Uri, dangerous: bool, seed: Option<String>, first_sync: bool, print_updates: bool)
         -> Result<(Sender<(String, Vec<String>)>, Receiver<String>)> {
     // Try to get the configuration
@@ -80,7 +81,10 @@ pub fn startup(server: http::Uri, dangerous: bool, seed: Option<String>, first_s
         std::io::Error::new(ErrorKind::Other, e)
     })?;
 
-    let lightclient = Arc::new(LightClient::new(seed, &config, latest_block_height)?);
+    let lightclient = match seed {
+        Some(phrase) => Arc::new(LightClient::new_from_phrase(phrase, &config, latest_block_height)?),
+        None => Arc::new(LightClient::read_from_disk(&config)?)
+    };
 
     // Print startup Messages
     info!(""); // Blank line
@@ -104,7 +108,6 @@ pub fn startup(server: http::Uri, dangerous: bool, seed: Option<String>, first_s
 
     Ok((command_tx, resp_rx))
 }
-
 
 pub fn start_interactive(command_tx: Sender<(String, Vec<String>)>, resp_rx: Receiver<String>) {
     // `()` can be used when no completer is required

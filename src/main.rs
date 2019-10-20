@@ -1,50 +1,17 @@
 use zecwalletlitelib::lightclient::{self, LightClientConfig};
-use zecwalletlitelib::startup_helpers::{report_permission_error,
+use zecwalletlitelib::{configure_clapapp,
+                      startup_helpers::{report_permission_error,
                                         startup,
                                         start_interactive,
-                                        attempt_recover_seed};
+                                        attempt_recover_seed}
+};
 use log::error;
 
 pub fn main() {
     // Get command line arguments
-    use clap::{Arg, App};
-    let matches = App::new("Zecwallet CLI")
-                    .version("1.0.0")
-                    .arg(Arg::with_name("dangerous")
-                        .long("dangerous")
-                        .help("Disable server TLS certificate verification. Use this if you're running a local lightwalletd with a self-signed certificate. WARNING: This is dangerous, don't use it with a server that is not your own.")
-                        .takes_value(false))
-                    .arg(Arg::with_name("nosync")
-                        .help("By default, zecwallet-cli will sync the wallet at startup. Pass --nosync to prevent the automatic sync at startup.")
-                        .long("nosync")
-                        .short("n")
-                        .takes_value(false))
-                    .arg(Arg::with_name("recover")
-                        .long("recover")
-                        .help("Attempt to recover the seed from the wallet")
-                        .takes_value(false))
-                    .arg(Arg::with_name("plantseed")
-                        .short("s")
-                        .long("plantseed")
-                        .value_name("seed_phrase")
-                        .help("Create a new wallet with the given 24-word seed phrase. Will fail if wallet already exists")
-                        .takes_value(true))
-                    .arg(Arg::with_name("server")
-                        .long("server")
-                        .value_name("server")
-                        .help("Lightwalletd server to connect to.")
-                        .takes_value(true)
-                        .default_value(lightclient::DEFAULT_SERVER))
-                    .arg(Arg::with_name("COMMAND")
-                        .help("Command to execute. If a command is not specified, zecwallet-cli will start in interactive mode.")
-                        .required(false)
-                        .index(1))
-                    .arg(Arg::with_name("PARAMS")
-                        .help("Params to execute command with. Run the 'help' command to get usage help.")
-                        .required(false)
-                        .multiple(true))
-                    .get_matches();
-
+    use clap::{App, Arg};
+    let clap_app = App::new("Zecwallet CLI");
+    let matches = configure_clapapp!(clap_app);
     if matches.is_present("recover") {
         attempt_recover_seed();
         return;

@@ -1,9 +1,9 @@
 use zecwalletlitelib::lightclient::{self, LightClientConfig};
 use zecwallet_cli::{configure_clapapp,
-                       startup_helpers::{report_permission_error,
-                                         startup,
-                                         start_interactive,
-                                         attempt_recover_seed}};
+                    report_permission_error,
+                    startup,
+                    start_interactive,
+                    attempt_recover_seed};
 use log::error;
 
 pub fn main() {

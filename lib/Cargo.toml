@@ -4,8 +4,6 @@ version = "0.1.0"
 edition = "2018"
 
 [dependencies]
-rustyline = "5.0.2"
-shellwords = "1.0.0"
 tower-grpc = { git = "https://github.com/tower-rs/tower-grpc" }
 futures = "0.1"
 bytes = "0.4"

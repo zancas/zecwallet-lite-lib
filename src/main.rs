@@ -1,5 +1,5 @@
 use zecwalletlitelib::lightclient::{self, LightClientConfig};
-use zecwalletlitelib::{configure_clapapp,
+use zecwallet_cli::{configure_clapapp,
                        startup_helpers::{report_permission_error,
                                          startup,
                                          start_interactive,

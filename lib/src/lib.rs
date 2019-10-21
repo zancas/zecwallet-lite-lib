@@ -1,7 +1,6 @@
 #[macro_use]
 extern crate rust_embed;
 
-pub mod declarative_macros;
 pub mod startup_helpers;
 pub mod lightclient;
 pub mod grpcconnector;

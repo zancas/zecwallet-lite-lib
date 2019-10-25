@@ -145,45 +145,45 @@ pub fn main() {         // in lib.rs
         return;// in main.rs
     }
 
-    let dangerous = matches.is_present("dangerous");
-    let nosync = matches.is_present("nosync");
-    let (command_tx, resp_rx) = match startup(server, dangerous, seed, birthday, !nosync, command.is_none()) {
-        Ok(c) => c,
-        Err(e) => {
-            eprintln!("Error during startup: {}", e);
-            error!("Error during startup: {}", e);
-            match e.raw_os_error() {
-                Some(13) => {
-                    startup_helpers::report_permission_error();
-                },
-                _ => {}
-            }
-            return;
-        }
-    };
+    let dangerous = matches.is_present("dangerous");// in main.rs
+    let nosync = matches.is_present("nosync");// in main.rs
+    let (command_tx, resp_rx) = match startup(server, dangerous, seed, birthday, !nosync, command.is_none()) {// in main.rs
+        Ok(c) => c,// in main.rs
+        Err(e) => {// in main.rs
+            eprintln!("Error during startup: {}", e);// in main.rs
+            error!("Error during startup: {}", e);// in main.rs
+            match e.raw_os_error() {// in main.rs
+                Some(13) => {// in main.rs
+                    startup_helpers::report_permission_error();// in main.rs
+                },// in main.rs
+                _ => {}// in main.rs
+            }// in main.rs
+            return;// in main.rs
+        }// in main.rs
+    };// in main.rs
 
-    if command.is_none() {
-        start_interactive(command_tx, resp_rx);
-    } else {
-        command_tx.send(
-            (command.unwrap().to_string(),
-                params.iter().map(|s| s.to_string()).collect::<Vec<String>>()))
-            .unwrap();
+    if command.is_none() {// in main.rs
+        start_interactive(command_tx, resp_rx);// in main.rs
+    } else {// in main.rs
+        command_tx.send(// in main.rs
+            (command.unwrap().to_string(),// in main.rs
+                params.iter().map(|s| s.to_string()).collect::<Vec<String>>()))// in main.rs
+            .unwrap();// in main.rs
 
-        match resp_rx.recv() {
-            Ok(s) => println!("{}", s),
-            Err(e) => {
-                let e = format!("Error executing command {}: {}", command.unwrap(), e);
-                eprintln!("{}", e);
-                error!("{}", e);
-            }
-        }
+        match resp_rx.recv() {// in main.rs
+            Ok(s) => println!("{}", s),// in main.rs
+            Err(e) => {// in main.rs
+                let e = format!("Error executing command {}: {}", command.unwrap(), e);// in main.rs
+                eprintln!("{}", e);// in main.rs
+                error!("{}", e);// in main.rs
+            }// in main.rs
+        }// in main.rs
 
-        // Save before exit
-        command_tx.send(("save".to_string(), vec![])).unwrap();
-        resp_rx.recv().unwrap();
-    }
-}
+        // Save before exit// in main.rs
+        command_tx.send(("save".to_string(), vec![])).unwrap();// in main.rs
+        resp_rx.recv().unwrap();// in main.rs
+    }// in main.rs
+}// in main.rs
 
 fn startup(server: http::Uri, dangerous: bool, seed: Option<String>, birthday: u64, first_sync: bool, print_updates: bool)  // in lib.rs
         -> io::Result<(Sender<(String, Vec<String>)>, Receiver<String>)> {  // in lib.rs

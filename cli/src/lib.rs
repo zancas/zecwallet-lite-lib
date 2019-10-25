@@ -152,7 +152,12 @@ pub fn startup(server: http::Uri, dangerous: bool, seed: Option<String>, birthda
     if first_sync {
         let update = lightclient.do_sync(true);
         if print_updates {
-            println!("{}", update);
+            match update {
+                Ok(j) => {
+                    println!("{}", j.pretty(2));
+                },
+                Err(e) => println!("{}", e)
+            }
         }
     }
 

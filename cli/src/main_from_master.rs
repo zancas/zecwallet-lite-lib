@@ -220,12 +220,12 @@ fn startup(server: http::Uri, dangerous: bool, seed: Option<String>, birthday: u
     if first_sync {// in lib.rs
         let update = lightclient.do_sync(true);// in lib.rs
         if print_updates {// in lib.rs
-            match update {
-                Ok(j) => {
-                    println!("{}", j.pretty(2));
-                },
-                Err(e) => println!("{}", e)
-            }
+            match update {// in lib.rs after addition!
+                Ok(j) => {// in lib.rs after addition!
+                    println!("{}", j.pretty(2));// in lib.rs after addition!
+                },// in lib.rs after addition!
+                Err(e) => println!("{}", e)// in lib.rs after addition!
+            }// in lib.rs after addition!
         }// in lib.rs
     }// in lib.rs
 

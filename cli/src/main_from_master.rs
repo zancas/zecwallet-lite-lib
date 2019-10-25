@@ -94,7 +94,7 @@ pub fn main() {         // in lib.rs
                         .multiple(true))// in lib.rs
                     .get_matches();// in main.rs
 
-    if matches.is_present("recover") {
+    if matches.is_present("recover") {// in main.rs
         // Create a Light Client Config in an attempt to recover the file.// in lib.rs
         let config = LightClientConfig {// in lib.rs
             server: "0.0.0.0:0".parse().unwrap(),// in lib.rs
@@ -333,10 +333,10 @@ fn command_loop(lightclient: Arc<LightClient>) -> (Sender<(String, Vec<String>)>
                 Err(_) => {// in lib.rs
                     // Timeout. Do a sync to keep the wallet up-to-date. False to whether to print updates on the console// in lib.rs
                     info!("Timeout, doing a sync");// in lib.rs
-                    match lc.do_sync(false) {
-                        Ok(_) => {},
-                        Err(e) => {error!("{}", e)}
-                    }
+                    match lc.do_sync(false) {// in lib.rs added
+                        Ok(_) => {},// in lib.rs added
+                        Err(e) => {error!("{}", e)}// in lib.rs added
+                    }// in lib.rs added
                     
                 }// in lib.rs
             }// in lib.rs

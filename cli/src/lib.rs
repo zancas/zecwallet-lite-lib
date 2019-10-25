@@ -264,7 +264,10 @@ pub fn command_loop(lightclient: Arc<LightClient>) -> (Sender<(String, Vec<Strin
                 Err(_) => {
                     // Timeout. Do a sync to keep the wallet up-to-date. False to whether to print updates on the console
                     info!("Timeout, doing a sync");
-                    lc.do_sync(false);
+                    match lc.do_sync(false) {
+                        Ok(_) => {},
+                        Err(e) => {error!("{}", e)}
+                    }
                 }
             }
         }

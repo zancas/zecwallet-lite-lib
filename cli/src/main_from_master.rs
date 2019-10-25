@@ -49,23 +49,22 @@ fn get_log_config(config: &LightClientConfig) -> io::Result<Config> { // in lib.
         .map_err(|e|Error::new(ErrorKind::Other, format!("{}", e))) // in lib.rs
 }
             // in lib.rs
-                            pp 
 pub fn main() {         // in lib.rs
     // Get command line arguments           // in lib.rs
     use clap::{Arg, App};// in lib.rs
-    let matches = App::new("Zecwallet CLI")
+    let matches = App::new("Zecwallet CLI") // in main.rs slightly modified
                     .version("1.1.0")// in lib.rs
-                    .arg(Arg::with_name("seed")
-                        .short("s")
-                        .long("seed")
-                        .value_name("seed_phrase")
-                        .help("Create a new wallet with the given 24-word seed phrase. Will fail if wallet already exists")
-                        .takes_value(true))
-                    .arg(Arg::with_name("birthday")
-                        .long("birthday")
-                        .value_name("birthday")
-                        .help("Specify wallet birthday when restoring from seed. This is the earlist block height where the wallet has a transaction.")
-                        .takes_value(true))
+                    .arg(Arg::with_name("seed")// in lib.rs
+                        .short("s")// in lib.rs
+                        .long("seed")// in lib.rs
+                        .value_name("seed_phrase")// in lib.rs
+                        .help("Create a new wallet with the given 24-word seed phrase. Will fail if wallet already exists")// in lib.rs
+                        .takes_value(true))// in lib.rs
+                    .arg(Arg::with_name("birthday")// in lib.rs
+                        .long("birthday")// in lib.rs
+                        .value_name("birthday")// in lib.rs
+                        .help("Specify wallet birthday when restoring from seed. This is the earlist block height where the wallet has a transaction.")// in lib.rs
+                        .takes_value(true))// in lib.rs
                     .arg(Arg::with_name("server")// in lib.rs
                         .long("server")// in lib.rs
                         .value_name("server")// in lib.rs
@@ -93,7 +92,7 @@ pub fn main() {         // in lib.rs
                         .help("Params to execute command with. Run the 'help' command to get usage help.")// in lib.rs
                         .required(false)// in lib.rs
                         .multiple(true))// in lib.rs
-                    .get_matches();
+                    .get_matches();// in main.rs
 
     if matches.is_present("recover") {
         // Create a Light Client Config in an attempt to recover the file.// in lib.rs
